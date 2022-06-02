@@ -35,8 +35,8 @@ build image:
     - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
 
-deploy to netlify:
-  stage: deploy
+release to heroku:
+  stage: release
   image: node:17
   script:
     - npm install -g heroku
