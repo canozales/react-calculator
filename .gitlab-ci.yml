@@ -1,0 +1,43 @@
+stages:
+  - build
+  - push
+  - release
+
+build image:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
+
+push to heroku:
+  stage: push
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - docker pull $CI_REGISTRY_IMAGE
+    - docker login --username=ncanozales@gmail.com --password=hellopeter registry.heroku.com
+    - docker tag $CI_REGISTRY_IMAGE registry.heroku.com/kalkulator-3
+    - docker push registry.heroku.com/kalkulator-3
+
+build image:
+  stage: release
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
+
+deploy to netlify:
+  stage: deploy
+  image: node:17
+  script:
+    - npm install -g heroku
+    - heroku container:release web --app kalkulator-3
