@@ -183,7 +183,7 @@
     background: #d2d3d9;
     transform: rotate(-45deg) translateY(-20px);
 
-    content: 'development';
+    content: 'production';
     font-weight: 600;
     color: #c79c5a;
     display: flex;
