@@ -13,8 +13,6 @@ test project:
     - yarn test
 
 build project:
-  environment:
-    name: development
   stage: build
   image: node:17
   script:
@@ -25,6 +23,8 @@ build project:
       - build/
 
 build image:
+  environment:
+    name: development
   stage: build
   image: docker
   services:
