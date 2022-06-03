@@ -25,8 +25,6 @@ build project:
       - build/
 
 build image:
-  environment:
-    name: development
   stage: build
   image: docker
   services:
