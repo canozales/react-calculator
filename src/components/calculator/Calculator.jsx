@@ -41,7 +41,6 @@ const Calculator = () => {
 
         if (item.action === BTN_ACTIONS.ADD) {
             addAnimSpan(item.display);
-
             const oper = item.display !== 'x' ? item.display : '*';
             setExpression(expression + oper);
         }
@@ -108,9 +107,11 @@ const Calculator = () => {
             }
         }
     }
+
     const thousandSeperator = (x) => {
         return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
+    
     const addAnimSpan = (content) => {
         const expDiv = expRef.current;
         const span = document.createElement('span');
@@ -157,7 +158,7 @@ const Calculator = () => {
 
     const deleteBtn = () => {
         const expDiv = expRef.current;
-
+        console.log(expDiv);
         if (!expDiv.children[1]){
             expDiv.firstChild.innerHTML = + expDiv.firstChild.innerHTML.slice(0, -1);
         } else {
@@ -168,7 +169,7 @@ const Calculator = () => {
     
     return (
         <div className="calculator">
-            {/* <======= Bagian Toggle =======> */}
+            {/* <======= Bagian Ribbon =======> */}
             <span className='ribbon'></span>
 
 
@@ -193,7 +194,6 @@ const Calculator = () => {
                 {
                     btns.map((item, index) => (
                         <button
-                            key={index}
                             className={item.class}
                             onClick={() => btnClick(item)}
                         >
